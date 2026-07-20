@@ -22,7 +22,7 @@ export default function Sidebar({
 
   const [usage, setUsage] = useState({
     scans: { current: 0, limit: 250, percent_used: 0 },
-    records: { current: 0, limit: 2000, percent_used: 0 },
+    records: { current: 0, limit: 1000, percent_used: 0 },
   });
 
   useEffect(() => {
