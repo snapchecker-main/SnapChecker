@@ -129,6 +129,7 @@ SnapChecker/
 ├── frontend/                 React frontend application
 ├── docs/                     Technical documentation
 │   ├── README.md
+│   ├── DEVELOPMENT_SETUP.md
 │   ├── DEPLOYMENT.md
 │   ├── ARCHITECTURE.md
 │   ├── DATABASE.md
@@ -166,6 +167,7 @@ The repository includes dedicated technical documentation covering deployment, a
 | Document                         | Description                                  |
 | -------------------------------- | -------------------------------------------- |
 | **docs/README.md**               | Documentation index                          |
+| **docs/DEVELOPMENT_SETUP.md**    | Local development and installation guide     |
 | **docs/DEPLOYMENT.md**           | Deployment and infrastructure guide          |
 | **docs/ARCHITECTURE.md**         | System architecture and design               |
 | **docs/DATABASE.md**             | Database schema and relationships            |

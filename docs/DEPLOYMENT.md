@@ -413,6 +413,7 @@ before starting the application.
 # Related Documentation
 
 - **README.md** — Project overview
+- **DEVELOPMENT_SETUP.md** - Local development and installation guide
 - **ARCHITECTURE.md** — System architecture
 - **DATABASE.md** — Database design
 - **API.md** — Backend API reference

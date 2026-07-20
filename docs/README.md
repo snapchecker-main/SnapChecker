@@ -11,6 +11,7 @@ For a general introduction to the project, begin with the repository's main **RE
 | Document                    | Purpose                                                                                                                        | Intended Audience                          |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------ |
 | **DEPLOYMENT.md**           | Documents the deployment process, infrastructure, environment configuration, and production setup.                             | System Administrators, Project Maintainers |
+| **DEVELOPMENT_SETUP.md**    | Guides developers through installing, configuring, and running SnapChecker locally.                                            | Developers                                 |
 | **ARCHITECTURE.md**         | Explains the overall system architecture, application design, and component interactions.                                      | Developers                                 |
 | **DATABASE.md**             | Describes the database schema, relationships, and data model used throughout the application.                                  | Backend Developers                         |
 | **API.md**                  | Provides a reference for the backend REST API endpoints, request formats, authentication requirements, and expected responses. | Frontend & Backend Developers              |
@@ -25,10 +26,11 @@ Different readers often require different information. The following reading pat
 ### New Developer
 
 1. Repository **README.md**
-2. ARCHITECTURE.md
-3. DATABASE.md
-4. API.md
-5. DEPLOYMENT.md
+2. DEVELOPMENT_SETUP.md
+3. ARCHITECTURE.md
+4. DATABASE.md
+5. API.md
+6. DEPLOYMENT.md
 
 ### System Administrator
 
@@ -39,11 +41,12 @@ Different readers often require different information. The following reading pat
 ### Project Maintainer
 
 1. Repository **README.md**
-2. ARCHITECTURE.md
-3. DEPLOYMENT.md
-4. DATABASE.md
-5. API.md
-6. PRODUCTION_CHECKLIST.md
+2. DEVELOPMENT_SETUP.md
+3. ARCHITECTURE.md
+4. DEPLOYMENT.md
+5. DATABASE.md
+6. API.md
+7. PRODUCTION_CHECKLIST.md
 
 ---
 

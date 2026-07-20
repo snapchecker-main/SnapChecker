@@ -254,6 +254,7 @@ The remaining items are primarily usability and quality-of-life improvements rat
 # Related Documentation
 
 - **README.md**
+- **DEVELOPMENT_SETUP.md**
 - **DEPLOYMENT.md**
 - **ARCHITECTURE.md**
 - **DATABASE.md**

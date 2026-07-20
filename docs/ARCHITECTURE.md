@@ -374,6 +374,7 @@ The existing layered architecture allows these features to be introduced with mi
 # Related Documentation
 
 - **README.md** — Project overview
+- **DEVELOPMENT_SETUP.md** - Local development and installation guide
 - **DEPLOYMENT.md** — Deployment architecture and infrastructure
 - **DATABASE.md** — Database schema and relationships
 - **API.md** — Backend API reference

@@ -284,6 +284,7 @@ Complex grading information is stored using JSON columns to support evolving ass
 # Related Documentation
 
 - **README.md** — Project overview
+- **DEVELOPMENT_SETUP.md** - Local development and installation guide
 - **DEPLOYMENT.md** — Infrastructure and deployment
 - **ARCHITECTURE.md** — Application architecture
 - **API.md** — Backend API reference

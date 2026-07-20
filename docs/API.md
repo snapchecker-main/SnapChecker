@@ -236,6 +236,7 @@ These interfaces provide complete request schemas, response models, and interact
 # Related Documentation
 
 - **README.md** — Project overview
+- **DEVELOPMENT_SETUP.md** - Local development and installation guide
 - **DEPLOYMENT.md** — Deployment and infrastructure
 - **ARCHITECTURE.md** — Application architecture
 - **DATABASE.md** — Database schema and relationships
