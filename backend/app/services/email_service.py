@@ -24,7 +24,7 @@ class EmailService:
         try:
             resend.Emails.send(
                 {
-                    "from": settings.EMAIL_FROM,
+                    "from": f"SnapChecker <{settings.EMAIL_FROM}>",
                     "to": [to_email],
                     "subject": subject,
                     "html": html_content,
