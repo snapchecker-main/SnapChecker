@@ -1,14 +1,6 @@
 # SnapChecker
 
-SnapChecker is a web-based assessment management system designed to streamline the creation, scanning, grading, and management of multiple-choice examinations. The platform enables educators to manage classrooms, build reusable answer sheet templates, process scanned assessments, and maintain digital grade records through a centralized application.
-
-The system combines automated Optical Mark Recognition (OMR), cloud-based storage, and modern web technologies to reduce manual grading effort while providing organized assessment data for instructors.
-
----
-
-## Overview
-
-The application follows a client-server architecture, where a React frontend communicates with a FastAPI backend through RESTful APIs. Assessment data is stored in a PostgreSQL database, scanned examination images are managed through cloud storage, and integrated email services support account verification and password recovery.
+SnapChecker is a web-based assessment management system that streamlines the creation, scanning, grading, and management of multiple-choice examinations. The platform enables educators to manage classrooms, create reusable answer sheet templates, automatically grade scanned assessments using Optical Mark Recognition (OMR), and maintain digital grade records in a centralized system.
 
 ---
 
