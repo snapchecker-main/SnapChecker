@@ -57,7 +57,7 @@ export default function Settings() {
         <div className="space-y-4 max-w-md">
           <label className="block">
             <span className="mb-1.5 block text-xs font-medium text-gray-700">
-              Full Name
+              Username
             </span>
             <Input defaultValue={user?.full_name || "Faculty Member"} />
           </label>

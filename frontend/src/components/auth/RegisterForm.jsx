@@ -96,7 +96,7 @@ export default function RegisterForm({ setMode }) {
 
       <div>
         <label className="mb-1.5 block text-sm font-medium text-gray-700">
-          Full Name
+          Userame
         </label>
         <Input
           autoFocus
@@ -171,7 +171,7 @@ export default function RegisterForm({ setMode }) {
 
       {/* Live Requirement Checklist */}
       <div className="bg-gray-50 p-3 rounded-lg space-y-1.5 mt-2">
-        <ReqItem met={isNameValid} text="Full name provided" />
+        <ReqItem met={isNameValid} text="Username provided" />
         <ReqItem met={isProviderValid} text="Standard or .edu email provider" />
         <ReqItem met={isPassValid} text="At least 8 characters long" />
         <ReqItem met={isConfirmMatch} text="Passwords match" />
