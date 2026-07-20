@@ -31,7 +31,7 @@ class EmailService:
             server.send_message(msg)
             server.quit()
         except Exception as e:
-            logger.error(f"Failed to send email: {e}")
+            logger.exception(e)
 
     @staticmethod
     def send_verification_email(email: str, token: str):
