@@ -96,7 +96,7 @@ export default function RegisterForm({ setMode }) {
 
       <div>
         <label className="mb-1.5 block text-sm font-medium text-gray-700">
-          Userame
+          Username
         </label>
         <Input
           autoFocus
