@@ -10,7 +10,6 @@ import SuccessState from "../components/auth/SuccessState";
 
 export default function Login() {
   const [mode, setMode] = useState("signin");
-  // Modes: signin, register, forgot_password, reset_password, verify_success, forgot_success, email_verified
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -22,7 +21,6 @@ export default function Login() {
         .then(() => {
           setMode("email_verified");
           window.history.replaceState({}, document.title, "/");
-          // 🚨 Req #12: Auto-switch after 2 seconds
           setTimeout(() => setMode("signin"), 2000);
         })
         .catch(() => {
@@ -37,7 +35,6 @@ export default function Login() {
 
   return (
     <main className="flex min-h-screen bg-gray-50/50 text-gray-900">
-      {/* 🚨 Req #5: Added simple keyframe animation for smooth transitions */}
       <style>{`
         @keyframes fadeSlideIn {
           from { opacity: 0; transform: translateY(8px); }
@@ -46,31 +43,72 @@ export default function Login() {
         .animate-fade-slide { animation: fadeSlideIn 0.4s ease-out forwards; }
       `}</style>
 
-      {/* Professional Split Layout */}
-      <div className="hidden w-5/12 bg-primary md:flex flex-col justify-between p-12 text-white">
-        <div>
-          <div className="flex items-center gap-2.5 mb-8">
-            <div className="grid h-8 w-8 place-items-center rounded-md bg-white text-primary">
-              <CheckCircle2 size={17} />
-            </div>
-            <span className="text-xl font-bold tracking-tight">
-              SnapChecker
-            </span>
+      {/* 🚨 UPDATED: Left Panel matching image_93253e.png */}
+      <div className="hidden w-[45%] bg-primary md:flex flex-col justify-between p-12 lg:p-16 text-white border-r border-primary-dark/20 relative overflow-hidden">
+        {/* Optional: Subtle grid background effect to match the image texture perfectly */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA0KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-50"></div>
+
+        {/* Logo Header */}
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="grid h-9 w-9 place-items-center rounded-xl border border-white/20 bg-white/10 text-white backdrop-blur-sm shadow-sm">
+            <CheckCircle2 size={18} strokeWidth={2.5} />
           </div>
-          <h1 className="text-4xl font-bold leading-tight mt-12">
-            Verify everything, <br /> seamlessly.
-          </h1>
-          <p className="mt-4 text-primary-100/80 text-lg max-w-sm">
-            Join the platform built for official university networks and
-            standard providers.
+          <span className="text-lg font-bold tracking-tight">SnapChecker</span>
+        </div>
+
+        {/* Main Content */}
+        <div className="relative z-10 mb-12 mt-auto pt-20">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80 mb-5">
+            Assessment workspace
           </p>
+          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-white mb-6">
+            Grade smarter,
+            <br />
+            not harder.
+          </h1>
+          <p className="text-[15px] text-white/80 leading-relaxed max-w-md mb-10 font-medium">
+            Scan, score, and publish results from one workspace. Built for
+            educators who value accuracy over paperwork.
+          </p>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-2 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden max-w-[420px] shadow-lg">
+            <div className="border-b border-r border-white/10 p-5 hover:bg-white/5 transition-colors">
+              <h3 className="font-bold text-white text-sm mb-1">Scan</h3>
+              <p className="text-xs text-white/70 font-medium">
+                Upload & auto-grade
+              </p>
+            </div>
+            <div className="border-b border-white/10 p-5 hover:bg-white/5 transition-colors">
+              <h3 className="font-bold text-white text-sm mb-1">Track</h3>
+              <p className="text-xs text-white/70 font-medium">
+                Submission status
+              </p>
+            </div>
+            <div className="border-r border-white/10 p-5 hover:bg-white/5 transition-colors">
+              <h3 className="font-bold text-white text-sm mb-1">Analyze</h3>
+              <p className="text-xs text-white/70 font-medium">
+                Per-item breakdown
+              </p>
+            </div>
+            <div className="p-5 hover:bg-white/5 transition-colors">
+              <h3 className="font-bold text-white text-sm mb-1">Publish</h3>
+              <p className="text-xs text-white/70 font-medium">
+                One-click release
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="relative z-10 text-xs text-white/60 font-medium tracking-wide">
+          © 2026 SnapChecker
         </div>
       </div>
 
-      {/* Form Container */}
-      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 animate-fade-slide">
-          {/* Mobile Logo */}
+      {/* Right Panel - Form Container (Unchanged from previous logic) */}
+      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-white md:bg-transparent">
+        <div className="w-full max-w-md bg-white p-8 sm:p-10 md:rounded-2xl md:shadow-[0_8px_30px_rgb(0,0,0,0.04)] md:border md:border-gray-100 animate-fade-slide">
           <div className="mb-8 flex items-center gap-2.5 md:hidden justify-center">
             <div className="grid h-8 w-8 place-items-center rounded-md bg-primary text-white">
               <CheckCircle2 size={17} />
@@ -80,7 +118,6 @@ export default function Login() {
             </span>
           </div>
 
-          {/* Navigation Tabs (Only for Signin / Register) */}
           {(mode === "signin" || mode === "register") && (
             <div className="mb-8 flex gap-6 border-b border-gray-100">
               <button
@@ -106,7 +143,6 @@ export default function Login() {
             </div>
           )}
 
-          {/* Dynamic Component Rendering */}
           <div className="animate-fade-slide" key={mode}>
             {mode === "signin" && <LoginForm setMode={setMode} />}
             {mode === "register" && <RegisterForm setMode={setMode} />}
@@ -117,7 +153,6 @@ export default function Login() {
               <ResetPasswordForm setMode={setMode} />
             )}
 
-            {/* 🚨 Req #12 & #13: Reusable Success States */}
             {mode === "verify_success" && (
               <SuccessState
                 title="Check your inbox"
