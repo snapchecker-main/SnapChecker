@@ -19,7 +19,7 @@ export default function ForgotPasswordForm({ setMode }) {
     setError("");
     try {
       await forgotPassword(trimmed);
-      setMode("forgot_success"); // 🚨 Req #13
+      setMode("forgot_success");
     } catch (err) {
       setError(handleAuthError(err));
     } finally {

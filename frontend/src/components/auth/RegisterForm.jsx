@@ -5,7 +5,6 @@ import { handleAuthError } from "../../utils/errorHandler";
 import Input from "../common/Input";
 import PrimaryButton from "../common/PrimaryButton";
 
-// 🚨 Req #3: Password Strength logic
 const getPasswordStrength = (pass) => {
   let score = 0;
   if (!pass) return { label: "", color: "bg-gray-200", w: "w-0" };
@@ -32,7 +31,6 @@ export default function RegisterForm({ setMode }) {
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState("");
 
-  // Live Validation States (🚨 Req #2)
   const isNameValid = formData.name.trim().length > 1;
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
   const domain = formData.email.split("@")[1]?.toLowerCase();

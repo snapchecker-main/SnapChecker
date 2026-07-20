@@ -1,4 +1,3 @@
-// 🚨 Req #4: Better Error Messages
 export const handleAuthError = (err) => {
   if (!err.response)
     return "Unable to reach SnapChecker. Check your connection.";

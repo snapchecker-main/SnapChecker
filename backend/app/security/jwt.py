@@ -19,9 +19,9 @@ def create_token(
     elif token_type == "refresh":
         expires = timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
     elif token_type == "verify_email":
-        expires = timedelta(hours=24) # 🚨 ADDED: 24 hours to verify
+        expires = timedelta(hours=24) 
     elif token_type == "reset_password":
-        expires = timedelta(minutes=15) # 🚨 ADDED: 15 minutes to reset
+        expires = timedelta(minutes=15) 
     else:
         raise ValueError("Invalid token type.")
 

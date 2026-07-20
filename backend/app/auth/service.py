@@ -21,7 +21,6 @@ class AuthService:
         if not (is_academic or is_public):
             raise ValueError("Registration is restricted to official university emails or verified providers (Gmail, Yahoo, Outlook).")
 
-        # 🚨 ADDED: Password Policy
         if len(data.password) < 8:
             raise ValueError("Password must be at least 8 characters long.")
 
@@ -49,7 +48,6 @@ class AuthService:
     
     @staticmethod
     def login(db: Session, email: str, password: str):
-        # 🚨 Normalized Email Processing
         normalized_email = email.strip().lower()
         user = db.query(User).filter(User.email == normalized_email).first()
 

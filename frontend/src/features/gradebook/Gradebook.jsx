@@ -409,7 +409,6 @@ export default function Gradebook({ classroomId, onQuotaChange }) {
         </div>
       </Card>
 
-      {/* 🚨 UPGRADED: SPLIT-PANE VIEW PAPER MODAL */}
       <Modal
         open={!!selectedScan}
         title={

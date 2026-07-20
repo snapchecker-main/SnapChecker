@@ -13,14 +13,14 @@ export default function LoginForm({ setMode }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // 🚨 Req #1
-  const [error, setError] = useState(""); // 🚨 Req #2: Inline errors
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    const trimmedEmail = email.trim(); // 🚨 Req #8
+    const trimmedEmail = email.trim();
     if (!trimmedEmail) return setError("Please enter your email.");
     if (!password) return setError("Please enter your password.");
 
@@ -50,9 +50,9 @@ export default function LoginForm({ setMode }) {
           Email
         </label>
         <Input
-          autoFocus // 🚨 Req #6
+          autoFocus
           type="email"
-          autoComplete="email" // 🚨 Req #14
+          autoComplete="email"
           value={email}
           disabled={isLoading}
           placeholder="you@example.com"

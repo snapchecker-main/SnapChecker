@@ -15,7 +15,6 @@ class CoordinateGenerator:
         if not id_block:
             return []
             
-        # 🚨 THE FIX: Accounting for Tailwind's `p-1` padding on the React wrapper
         padding = 4
         start_x = id_block.get("x") + padding
         start_y = id_block.get("y") + padding
@@ -23,7 +22,6 @@ class CoordinateGenerator:
         
         radius = 9 
         
-        # 🚨 THE FIX: Stride = Top Box Width (20px) + Tailwind gap-2 (8px) = 28px
         col_stride = 28 
         row_stride = 22 # Bubble h-[18px] + flex gap-1 (4px)
         
@@ -59,7 +57,6 @@ class CoordinateGenerator:
         mapped_questions = {}
 
         for block in q_blocks:
-            # 🚨 THE FIX: Global 4px padding offset
             padding = 4
             start_x = block.get("x") + padding
             start_y = block.get("y") + padding

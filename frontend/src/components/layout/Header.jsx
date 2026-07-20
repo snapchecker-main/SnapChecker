@@ -83,7 +83,6 @@ export default function Header({ sidebarOpen, setSidebarOpen, classroom }) {
           <CheckCircle2 size={15} />
         </Link>
 
-        {/* 🚨 FIGMA MATCH: Breadcrumb Typography */}
         <div className="hidden items-center gap-1.5 text-xs text-black-400 sm:flex">
           <Link to="/" className="hover:text-gray-700">
             Dashboard
