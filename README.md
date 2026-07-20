@@ -1,310 +1,179 @@
-# SnapCheck 2.0
+# SnapChecker
 
-> A modern assessment management platform that automates grading of paper-based multiple-choice examinations using Optical Mark Recognition (OMR).
+SnapChecker is a web-based assessment management system designed to streamline the creation, scanning, grading, and management of multiple-choice examinations. The platform enables educators to manage classrooms, build reusable answer sheet templates, process scanned assessments, and maintain digital grade records through a centralized application.
 
-![Status](https://img.shields.io/badge/status-active-success)
-![Frontend](https://img.shields.io/badge/frontend-React-61DAFB)
-![Backend](https://img.shields.io/badge/backend-FastAPI-009688)
-![Database](https://img.shields.io/badge/database-SQLite-blue)
-![License](https://img.shields.io/badge/license-Educational-lightgrey)
+The system combines automated Optical Mark Recognition (OMR), cloud-based storage, and modern web technologies to reduce manual grading effort while providing organized assessment data for instructors.
 
 ---
 
-# Overview
+## Overview
 
-SnapCheck 2.0 is a web-based assessment management platform developed for professors and instructors.
+SnapChecker provides an end-to-end workflow for managing paper-based multiple-choice assessments. From creating classrooms and importing student rosters to designing answer sheet templates and processing examination scans, the platform centralizes the entire assessment lifecycle within a single web application.
 
-The application simplifies the process of administering paper-based examinations by allowing educators to create assessments, generate answer sheets, scan completed papers using Optical Mark Recognition (OMR), automatically grade submissions, and analyze student performance.
-
-Instead of replacing paper examinations, SnapCheck modernizes the grading workflow, enabling educators to save hours of manual work while improving grading consistency and accuracy.
+The application follows a client-server architecture, where a React frontend communicates with a FastAPI backend through RESTful APIs. Assessment data is stored in a PostgreSQL database, scanned examination images are managed through cloud storage, and integrated email services support account verification and password recovery.
 
 ---
 
-# Why SnapCheck?
+## Project Objectives
 
-Many educational institutions still rely on printed examinations because they are practical and easy to administer.
+SnapChecker was designed to modernize the workflow of paper-based multiple-choice examinations by providing a centralized platform that enables educators to:
 
-However, grading paper exams manually presents several challenges:
-
-- Time-consuming grading process
-- Manual score computation
-- Human error
-- Difficult record management
-- Limited assessment analytics
-
-SnapCheck addresses these challenges through intelligent grading automation.
+- Digitize classroom assessment management.
+- Reduce manual grading through automated OMR processing.
+- Organize assessment records in a centralized system.
+- Provide reusable answer sheet templates for future assessments.
+- Support secure and scalable deployment using modern cloud infrastructure.
 
 ---
 
-# Key Features
+## Key Features
 
-## Classroom Management
+### Authentication & Account Management
 
-- Create and manage multiple classrooms
-- Organize assessments by class
-- Maintain student rosters
-- Semester-wide gradebook
+- Account registration
+- Email verification
+- Secure JWT-based authentication
+- Persistent login using HttpOnly refresh cookies
+- Password reset via email
+- Password change functionality
+- Rate-limited authentication endpoints
 
----
+### Classroom Management
 
-## Assessment Builder
+- Classroom creation and management
+- Classroom and deletion
+- Storage usage monitoring
+- Assessment organization by classroom
 
-- Create quizzes and examinations
-- Configure number of items and choices
-- Build answer keys
-- Generate printable answer sheets
+### Student Roster Management
 
----
+- Manual student registration
+- CSV roster import
+- Student record management
+- Duplicate record prevention
 
-## OMR Scanner
+### Assessment Management
 
-The scanner is the flagship feature of SnapCheck.
+- Interactive answer sheet template builder
+- Configurable examination settings
+- Answer key management
+- Reusable assessment templates
 
-Capabilities include:
+### Automated Grading
 
-- Upload scanned papers
-- Perspective correction
-- Bubble detection
-- Student ID recognition
-- Automatic grading
-- Manual review for ambiguous papers
-- Batch scanning
+- Examination image upload
+- Optical Mark Recognition (OMR)
+- Automatic score computation
+- Student answer matching
+- Missing student detection
 
----
+### Gradebook & Analytics
 
-## Gradebook
-
-Assessment-specific gradebook featuring:
-
-- Student scores
-- Missing submissions
-- Manual score overrides
-- Scan deletion
-- Student reassignment
-
----
-
-## Item Analysis
-
-Automatically generates statistics for every question:
-
-- Correct answer
-- Correct response count
-- Percentage correct
-- Difficulty identification
+- Assessment overview
+- Item analysis
+- Semester gradebook
+- PDF export
+- CSV export
 
 ---
 
-## Semester Gradebook
+## Technology Stack
 
-Provides an overview of student performance across multiple assessments within a classroom.
-
----
-
-# Technology Stack
-
-## Frontend
-
-- React
-- Vite
-- JavaScript
-- Zustand
-- Custom CSS
+| Layer          | Technologies                              |
+| -------------- | ----------------------------------------- |
+| Frontend       | React, Vite, Tailwind CSS, Zustand, Axios |
+| Backend        | FastAPI, SQLAlchemy, Alembic              |
+| Database       | Neon PostgreSQL                           |
+| Image Storage  | Cloudinary                                |
+| Authentication | JWT, HttpOnly Refresh Cookies             |
+| Email Service  | Gmail SMTP                                |
+| Deployment     | Vercel, Render                            |
 
 ---
 
-## Backend
+## System Overview
 
-- FastAPI
-- SQLAlchemy
-- SQLite
+```mermaid
+flowchart TD
 
----
+    User["Professor / Faculty Member"]
 
-## Image Processing
+    Frontend["React Frontend<br/>(Vercel)"]
 
-- OpenCV
-- Custom Vision Engine
+    Backend["FastAPI Backend<br/>(Render)"]
 
----
+    DB["Neon PostgreSQL"]
 
-# Project Structure
+    Cloud["Cloudinary"]
 
-```
-SnapCheck-v2/
+    Email["Gmail SMTP"]
 
-backend/
-frontend/
-docs/
+    User --> Frontend
+    Frontend -->|"HTTPS REST API"| Backend
 
-README.md
+    Backend --> DB
+    Backend --> Cloud
+    Backend --> Email
 ```
 
-For detailed documentation, see the `docs/` directory.
+The frontend provides the user interface and communicates exclusively with the backend through authenticated REST API requests. The backend manages authentication, business logic, database operations, image processing, and third-party service integrations. Persistent application data is stored in PostgreSQL, uploaded scan images are managed through Cloudinary, and Gmail SMTP is used for account verification and password recovery.
 
 ---
 
-# Documentation
+## Repository Structure
 
-The project includes comprehensive documentation.
+```text
+SnapChecker/
+│
+├── backend/                  FastAPI backend application
+├── frontend/                 React frontend application
+├── docs/                     Technical documentation
+│   ├── README.md
+│   ├── DEPLOYMENT.md
+│   ├── ARCHITECTURE.md
+│   ├── DATABASE.md
+│   ├── API.md
+│   └── PRODUCTION_CHECKLIST.md
+│
+├── README.md
+└── .gitignore
+```
 
-| Document             | Description               |
-| -------------------- | ------------------------- |
-| PROJECT_CONTEXT.md   | Complete project overview |
-| ARCHITECTURE.md      | System architecture       |
-| DEVELOPMENT_GUIDE.md | Development standards     |
-| ROADMAP.md           | Development roadmap       |
-| API_CONVENTIONS.md   | API standards             |
-| DATABASE_SCHEMA.md   | Database design           |
-| DECISIONS.md         | Architecture decisions    |
+Additional technical documentation is available in the **docs** directory.
 
 ---
 
-# Installation
+## Local Development
 
-## Clone the repository
+### Prerequisites
 
-```bash
-git clone <repository-url>
-cd SnapCheck-v2
-```
+- Node.js
+- Python 3.13 or later
+- PostgreSQL (or Neon PostgreSQL)
+- Cloudinary account
+- Gmail SMTP account
 
----
+Clone the repository, configure the required environment variables, install the project dependencies, and start both the backend and frontend development servers.
 
-## Backend
-
-```bash
-cd backend
-
-python -m venv .venv
-```
-
-Activate the virtual environment.
-
-Windows PowerShell
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-Install dependencies.
-
-```bash
-pip install -r requirements.txt
-```
-
-Run the backend.
-
-```bash
-uvicorn app.main:app --reload
-```
-
-Backend:
-
-```
-http://localhost:8000
-```
+Complete deployment and environment setup instructions are available in **docs/DEPLOYMENT.md**.
 
 ---
 
-## Frontend
+## Documentation
 
-Open a new terminal.
+The repository includes dedicated technical documentation covering deployment, architecture, database design, backend APIs, and production verification.
 
-```bash
-cd frontend
-
-npm install
-
-npm run dev
-```
-
-Frontend:
-
-```
-http://localhost:5173
-```
+| Document                         | Description                                  |
+| -------------------------------- | -------------------------------------------- |
+| **docs/README.md**               | Documentation index                          |
+| **docs/DEPLOYMENT.md**           | Deployment and infrastructure guide          |
+| **docs/ARCHITECTURE.md**         | System architecture and design               |
+| **docs/DATABASE.md**             | Database schema and relationships            |
+| **docs/API.md**                  | Backend API reference                        |
+| **docs/PRODUCTION_CHECKLIST.md** | Production deployment verification checklist |
 
 ---
 
-# Future Roadmap
+## License
 
-Upcoming improvements include:
-
-- PostgreSQL migration
-- User authentication
-- JWT authorization
-- Cloud deployment
-- Production readiness
-- Automated testing
-
-See `ROADMAP.md` for details.
-
----
-
-# Design Philosophy
-
-SnapCheck is designed as a professional productivity tool rather than a traditional educational platform.
-
-The interface draws inspiration from modern SaaS applications such as:
-
-- Linear
-- GitHub
-- Stripe Dashboard
-- Notion
-- Vercel
-
-The goal is to create software that educators can use efficiently every day.
-
----
-
-# Development Principles
-
-This project follows several engineering principles:
-
-- Feature-based frontend architecture
-- Service-oriented backend
-- RESTful API design
-- Reusable component system
-- Separation of concerns
-- Incremental refactoring
-
----
-
-# Current Status
-
-Current Version:
-
-```
-SnapCheck 2.0
-```
-
-Project Status:
-
-- Core Features ✅
-- OMR Scanner ✅
-- Gradebook ✅
-- Assessment Analytics ✅
-- UI/UX Improvements 🔄
-- Authentication ⏳
-- PostgreSQL Migration ⏳
-
----
-
-# Contributors
-
-Developed as a Computer Science capstone project.
-
-Contributors:
-
-- Your Name
-- Team Member 1
-- Team Member 2
-
----
-
-# License
-
-This project was developed for educational purposes.
-
-All rights reserved by the project authors.
+This repository was developed for educational and institutional use. Licensing, distribution, and continued maintenance should follow the policies established by the project owner or deploying institution.
