@@ -32,6 +32,14 @@ class Settings:
     SMTP_USER: str = os.getenv("SMTP_USER", "")
     SMTP_PASSWORD: str = os.getenv("SMTP_PASSWORD", "")
     FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:5173")
+    
+    BACKEND_CORS_ORIGINS: list[str] = [
+    origin.strip()
+    for origin in os.getenv(
+        "BACKEND_CORS_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173",
+    ).split(",")
+]
     COOKIE_SECURE: bool = (
     os.getenv("COOKIE_SECURE", "false").lower() == "true"
     )
