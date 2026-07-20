@@ -8,9 +8,20 @@ The system combines automated Optical Mark Recognition (OMR), cloud-based storag
 
 ## Overview
 
-SnapChecker provides an end-to-end workflow for managing paper-based multiple-choice assessments. From creating classrooms and importing student rosters to designing answer sheet templates and processing examination scans, the platform centralizes the entire assessment lifecycle within a single web application.
-
 The application follows a client-server architecture, where a React frontend communicates with a FastAPI backend through RESTful APIs. Assessment data is stored in a PostgreSQL database, scanned examination images are managed through cloud storage, and integrated email services support account verification and password recovery.
+
+---
+
+## Live Deployment
+
+The latest production deployment of SnapChecker is available below.
+
+| Service                     | URL                                        |
+| --------------------------- | ------------------------------------------ |
+| Frontend Application        | https://snap-checker.vercel.app            |
+| Backend API                 | https://snapchecker-api.onrender.com       |
+| API Documentation (Swagger) | https://snapchecker-api.onrender.com/docs  |
+| API Documentation (ReDoc)   | https://snapchecker-api.onrender.com/redoc |
 
 ---
 
