@@ -1,0 +1,26 @@
+# Root
+node_modules/
+.env
+.DS_Store
+Thumbs.db
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+
+# Virtual environments
+**/.venv/
+**/venv/
+
+# Frontend
+**/node_modules/
+**/dist/
+**/dist-ssr/
+
+# Backend
+backend/temp_uploads/
+backend/snapcheck_v2.db
+
+# Environment files
+**/.env
+**/.env.local

@@ -1,0 +1,19 @@
+# Python Environment
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# SnapCheck Specifics
+temp_uploads/
+DEBUG_COORDINATES_MAP.jpg
+snapcheck_v2.db
+
+# Secrets
+.env
+.env.local
+
+# Logs
+*.log
