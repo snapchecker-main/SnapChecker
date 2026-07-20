@@ -62,7 +62,7 @@ class Settings:
     )
     
     # Production Storage Quotas Configuration
-    STORAGE_SCAN_IMAGE_LIMIT: int = int(os.getenv("STORAGE_SCAN_IMAGE_LIMIT", "500"))
-    STORAGE_GRADE_RECORD_LIMIT: int = int(os.getenv("STORAGE_GRADE_RECORD_LIMIT", "2000"))
+    STORAGE_SCAN_IMAGE_LIMIT: int = int(os.getenv("STORAGE_SCAN_IMAGE_LIMIT", "250"))
+    STORAGE_GRADE_RECORD_LIMIT: int = int(os.getenv("STORAGE_GRADE_RECORD_LIMIT", "1000"))
 
 settings = Settings()

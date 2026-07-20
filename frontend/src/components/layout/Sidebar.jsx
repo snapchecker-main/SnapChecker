@@ -21,8 +21,8 @@ export default function Sidebar({
   const activeClassrooms = classrooms.filter((c) => c.status !== "Archived");
 
   const [usage, setUsage] = useState({
-    scans: { current: 0, limit: 500, percent_used: 0 },
-    records: { current: 0, limit: 20000, percent_used: 0 },
+    scans: { current: 0, limit: 250, percent_used: 0 },
+    records: { current: 0, limit: 2000, percent_used: 0 },
   });
 
   useEffect(() => {
@@ -46,9 +46,12 @@ export default function Sidebar({
         : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
     } ${sidebarOpen ? "gap-2.5 px-2.5" : "justify-center"}`;
 
+  // Tooltip message for storage maintenance
+  const storageTooltipMessage =
+    "To stay within storage limits, please regularly delete old image scans. Your grade records use minimal space and can be safely kept.";
+
   return (
     <aside
-      // 🚨 UI CHANGE: Switches between w-56 and w-16
       className={`flex shrink-0 flex-col border-r border-gray-200 bg-white transition-[width] duration-200 ${
         sidebarOpen ? "w-56" : "hidden w-16 md:flex"
       }`}
@@ -70,7 +73,6 @@ export default function Sidebar({
 
       <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
         <nav className="space-y-1 p-3">
-          {/* Tooltips added for collapsed state */}
           <NavLink
             to="/"
             className={getNavStyle}
@@ -152,7 +154,7 @@ export default function Sidebar({
 
       <div className="mt-auto border-t border-gray-100 p-3">
         {sidebarOpen ? (
-          <div className="space-y-3">
+          <div className="space-y-3 cursor-help" title={storageTooltipMessage}>
             <p className="px-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-400">
               Storage usage
             </p>
@@ -198,7 +200,10 @@ export default function Sidebar({
             </div>
           </div>
         ) : (
-          <div className="flex justify-center" title="Storage usage">
+          <div
+            className="flex justify-center cursor-help"
+            title={`Storage usage:\n${storageTooltipMessage}`}
+          >
             <div className="grid h-7 w-7 place-items-center rounded-md bg-gray-50 text-gray-400">
               <Database size={14} />
             </div>
