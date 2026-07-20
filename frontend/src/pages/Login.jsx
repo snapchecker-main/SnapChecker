@@ -1,39 +1,16 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { CheckCircle2, Eye, EyeOff, Mail, ArrowLeft } from "lucide-react";
-import {
-  login,
-  register,
-  me,
-  verifyEmail,
-  forgotPassword,
-  resetPassword,
-} from "../api/services/authApi";
-import useAuthStore from "../store/useAuthStore";
-import Input from "../components/common/Input";
-import PrimaryButton from "../components/common/PrimaryButton";
+import { CheckCircle2 } from "lucide-react";
+import { verifyEmail } from "../api/services/authApi";
+import LoginForm from "../components/auth/LoginForm";
+import RegisterForm from "../components/auth/RegisterForm";
+import ForgotPasswordForm from "../components/auth/ForgotPasswordForm";
+import ResetPasswordForm from "../components/auth/ResetPasswordForm";
+import SuccessState from "../components/auth/SuccessState";
 
 export default function Login() {
-  const setAccessToken = useAuthStore((s) => s.setAccessToken);
-  const setUser = useAuthStore((s) => s.setUser);
-
-  const [mode, setMode] = useState("signin"); // signin, register, forgot_password, reset_password, verify_success
-  const [showPass, setShowPass] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-
-  // Sign in state
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  // Register state
-  const [fullName, setFullName] = useState("");
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  // Reset state
-  const [forgotEmail, setForgotEmail] = useState("");
-  const [resetToken, setResetToken] = useState("");
+  const [mode, setMode] = useState("signin");
+  // Modes: signin, register, forgot_password, reset_password, verify_success, forgot_success, email_verified
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -42,421 +19,129 @@ export default function Login() {
 
     if (vToken) {
       verifyEmail(vToken)
-        .then((res) => {
-          toast.success(res.message);
+        .then(() => {
+          setMode("email_verified");
           window.history.replaceState({}, document.title, "/");
-          setMode("signin");
+          // 🚨 Req #12: Auto-switch after 2 seconds
+          setTimeout(() => setMode("signin"), 2000);
         })
         .catch(() => {
+          toast.error("Invalid or expired verification link.");
           window.history.replaceState({}, document.title, "/");
         });
     } else if (rToken) {
-      setResetToken(rToken);
       setMode("reset_password");
       window.history.replaceState({}, document.title, "/");
     }
   }, []);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const token = await login(email, password);
-      setAccessToken(token.access_token);
-      const user = await me();
-      setUser(user);
-    } catch (err) {
-      // Error handled by Axios interceptor
-    }
-  };
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    if (!fullName.trim()) {
-      toast.error("Username is required.");
-      return;
-    }
-    if (!registerEmail.trim()) {
-      toast.error("Email is required.");
-      return;
-    }
-
-    // Gatekeeper logic
-    const domain = registerEmail.split("@")[1]?.toLowerCase();
-    const allowedDomains = [
-      "gmail.com",
-      "yahoo.com",
-      "outlook.com",
-      "hotmail.com",
-    ];
-    const isEdu = domain?.endsWith(".edu") || domain?.endsWith(".edu.ph");
-
-    if (!domain || (!allowedDomains.includes(domain) && !isEdu)) {
-      toast.error(
-        "Registration is restricted to official university emails or standard providers (Gmail, Yahoo, Outlook). Temporary emails are not allowed.",
-      );
-      return;
-    }
-
-    if (!registerPassword) {
-      toast.error("Password is required.");
-      return;
-    }
-    if (registerPassword !== confirmPassword) {
-      toast.error("Passwords do not match.");
-      return;
-    }
-
-    try {
-      await register({
-        email: registerEmail,
-        password: registerPassword,
-        full_name: fullName,
-        school_name: "",
-        department: "",
-      });
-      setMode("verify_success");
-      toast.success("Registration successful!");
-    } catch (err) {
-      // Error handled by Axios interceptor
-    }
-  };
-
-  const handleForgotPassword = async (e) => {
-    e.preventDefault();
-    if (!forgotEmail) {
-      toast.error("Please enter your email.");
-      return;
-    }
-    try {
-      const res = await forgotPassword(forgotEmail);
-      toast.success(res.message);
-      setMode("signin");
-    } catch (err) {
-      // Error handled by Axios interceptor
-    }
-  };
-
-  const handleResetPassword = async (e) => {
-    e.preventDefault();
-    if (!registerPassword || registerPassword !== confirmPassword) {
-      toast.error("Passwords do not match or are empty.");
-      return;
-    }
-    try {
-      const res = await resetPassword(resetToken, registerPassword);
-      toast.success(res.message);
-      setMode("signin");
-      setRegisterPassword("");
-      setConfirmPassword("");
-    } catch (err) {
-      // Error handled by Axios interceptor
-    }
-  };
-
   return (
-    <main className="flex min-h-screen bg-gray-50">
-      <div className="hidden w-1 shrink-0 bg-primary md:block" />
+    <main className="flex min-h-screen bg-gray-50/50 text-gray-900">
+      {/* 🚨 Req #5: Added simple keyframe animation for smooth transitions */}
+      <style>{`
+        @keyframes fadeSlideIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-slide { animation: fadeSlideIn 0.4s ease-out forwards; }
+      `}</style>
 
-      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12">
-        <div className="mb-10 flex items-center gap-2.5">
-          <div className="grid h-8 w-8 place-items-center rounded-md bg-primary text-white">
-            <CheckCircle2 size={17} />
+      {/* Professional Split Layout */}
+      <div className="hidden w-5/12 bg-primary md:flex flex-col justify-between p-12 text-white">
+        <div>
+          <div className="flex items-center gap-2.5 mb-8">
+            <div className="grid h-8 w-8 place-items-center rounded-md bg-white text-primary">
+              <CheckCircle2 size={17} />
+            </div>
+            <span className="text-xl font-bold tracking-tight">
+              SnapChecker
+            </span>
           </div>
-          <span className="text-[15px] font-semibold tracking-[-0.02em] text-gray-900">
-            SnapChecker
-          </span>
+          <h1 className="text-4xl font-bold leading-tight mt-12">
+            Verify everything, <br /> seamlessly.
+          </h1>
+          <p className="mt-4 text-primary-100/80 text-lg max-w-sm">
+            Join the platform built for official university networks and
+            standard providers.
+          </p>
         </div>
+      </div>
 
-        <div className="w-full max-w-[360px]">
+      {/* Form Container */}
+      <div className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 animate-fade-slide">
+          {/* Mobile Logo */}
+          <div className="mb-8 flex items-center gap-2.5 md:hidden justify-center">
+            <div className="grid h-8 w-8 place-items-center rounded-md bg-primary text-white">
+              <CheckCircle2 size={17} />
+            </div>
+            <span className="text-[17px] font-bold tracking-tight">
+              SnapChecker
+            </span>
+          </div>
+
+          {/* Navigation Tabs (Only for Signin / Register) */}
           {(mode === "signin" || mode === "register") && (
-            <div className="mb-6 flex border-b border-gray-200">
+            <div className="mb-8 flex gap-6 border-b border-gray-100">
               <button
                 onClick={() => setMode("signin")}
-                className={`pb-2.5 pr-6 text-sm font-medium transition-colors ${
+                className={`pb-3 text-sm font-semibold transition-all ${
                   mode === "signin"
                     ? "border-b-2 border-primary text-gray-900"
                     : "text-gray-400 hover:text-gray-600"
                 }`}
-                style={mode === "signin" ? { marginBottom: -1 } : undefined}
               >
                 Sign in
               </button>
               <button
                 onClick={() => setMode("register")}
-                className={`pb-2.5 text-sm font-medium transition-colors ${
+                className={`pb-3 text-sm font-semibold transition-all ${
                   mode === "register"
                     ? "border-b-2 border-primary text-gray-900"
                     : "text-gray-400 hover:text-gray-600"
                 }`}
-                style={mode === "register" ? { marginBottom: -1 } : undefined}
               >
-                Register
+                Create Account
               </button>
             </div>
           )}
 
-          {mode === "signin" && (
-            <form onSubmit={handleLogin} className="space-y-4">
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-gray-700">
-                  Email
-                </span>
-                <Input
-                  type="email"
-                  value={email}
-                  placeholder="..."
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </label>
+          {/* Dynamic Component Rendering */}
+          <div className="animate-fade-slide" key={mode}>
+            {mode === "signin" && <LoginForm setMode={setMode} />}
+            {mode === "register" && <RegisterForm setMode={setMode} />}
+            {mode === "forgot_password" && (
+              <ForgotPasswordForm setMode={setMode} />
+            )}
+            {mode === "reset_password" && (
+              <ResetPasswordForm setMode={setMode} />
+            )}
 
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-gray-700">
-                  Password
-                </span>
-                <div className="relative">
-                  <Input
-                    type={showPass ? "text" : "password"}
-                    value={password}
-                    className="pr-10"
-                    placeholder="..."
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPass(!showPass)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    tabIndex={-1}
-                  >
-                    {showPass ? <EyeOff size={14} /> : <Eye size={14} />}
-                  </button>
-                </div>
-              </label>
-
-              <div className="flex items-center justify-between text-xs">
-                <label className="flex cursor-pointer items-center gap-2 text-gray-600">
-                  <input
-                    type="checkbox"
-                    defaultChecked
-                    className="accent-primary"
-                  />
-                  Keep me signed in
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setMode("forgot_password")}
-                  className="font-medium text-primary hover:underline"
-                >
-                  Forgot password?
-                </button>
-              </div>
-
-              <PrimaryButton type="submit" fullWidth className="mt-1">
-                Sign in
-              </PrimaryButton>
-
-              <p className="pt-1 text-center text-xs text-gray-400">
-                No account?{" "}
-                <button
-                  type="button"
-                  onClick={() => setMode("register")}
-                  className="font-medium text-primary hover:underline"
-                >
-                  Request access
-                </button>
-              </p>
-            </form>
-          )}
-
-          {mode === "register" && (
-            <form onSubmit={handleRegister} className="space-y-3.5">
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-gray-700">
-                  Username
-                </span>
-                <Input
-                  placeholder="Name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-              </label>
-
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-gray-700">
-                  Email
-                </span>
-                <Input
-                  type="email"
-                  placeholder="you@gmail.com"
-                  value={registerEmail}
-                  onChange={(e) => setRegisterEmail(e.target.value)}
-                />
-              </label>
-
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-gray-700">
-                  Password
-                </span>
-                <div className="relative">
-                  <Input
-                    type={showPass ? "text" : "password"}
-                    className="pr-10"
-                    placeholder="Min. 8 characters"
-                    value={registerPassword}
-                    onChange={(e) => setRegisterPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPass(!showPass)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    tabIndex={-1}
-                  >
-                    {showPass ? <EyeOff size={14} /> : <Eye size={14} />}
-                  </button>
-                </div>
-              </label>
-
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-gray-700">
-                  Confirm password
-                </span>
-                <div className="relative">
-                  <Input
-                    type={showConfirm ? "text" : "password"}
-                    className="pr-10"
-                    placeholder="Repeat password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirm(!showConfirm)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    tabIndex={-1}
-                  >
-                    {showConfirm ? <EyeOff size={14} /> : <Eye size={14} />}
-                  </button>
-                </div>
-              </label>
-
-              <PrimaryButton type="submit" fullWidth className="mt-1">
-                Create account
-              </PrimaryButton>
-
-              <p className="pt-1 text-center text-xs text-gray-400">
-                Already have access?{" "}
-                <button
-                  type="button"
-                  onClick={() => setMode("signin")}
-                  className="font-medium text-primary hover:underline"
-                >
-                  Sign in
-                </button>
-              </p>
-            </form>
-          )}
-
-          {mode === "forgot_password" && (
-            <form onSubmit={handleForgotPassword} className="space-y-4">
-              <div className="mb-6 text-center">
-                <h2 className="text-lg font-bold text-gray-900">
-                  Reset Password
-                </h2>
-                <p className="mt-1 text-xs text-gray-500">
-                  Enter your email and we'll send you a link to reset your
-                  password. Make sure to check your spam folder if you don't see
-                  it in your inbox.
-                </p>
-              </div>
-
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-gray-700">
-                  Email
-                </span>
-                <Input
-                  type="email"
-                  value={forgotEmail}
-                  placeholder="you@gmail.com"
-                  onChange={(e) => setForgotEmail(e.target.value)}
-                />
-              </label>
-
-              <PrimaryButton type="submit" fullWidth>
-                Send Reset Link
-              </PrimaryButton>
-
-              <button
-                type="button"
-                onClick={() => setMode("signin")}
-                className="mx-auto flex items-center gap-1 text-xs font-medium text-gray-500 hover:text-gray-900 mt-4"
-              >
-                <ArrowLeft size={14} /> Back to login
-              </button>
-            </form>
-          )}
-
-          {/* 🚨 ADDED: Reset Password Flow */}
-          {mode === "reset_password" && (
-            <form onSubmit={handleResetPassword} className="space-y-4">
-              <div className="mb-6 text-center">
-                <h2 className="text-lg font-bold text-gray-900">
-                  Create New Password
-                </h2>
-                <p className="mt-1 text-xs text-gray-500">
-                  Please enter your new password below.
-                </p>
-              </div>
-
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-gray-700">
-                  New Password
-                </span>
-                <Input
-                  type="password"
-                  placeholder="Min. 8 characters"
-                  value={registerPassword}
-                  onChange={(e) => setRegisterPassword(e.target.value)}
-                />
-              </label>
-
-              <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-gray-700">
-                  Confirm Password
-                </span>
-                <Input
-                  type="password"
-                  placeholder="Repeat new password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </label>
-
-              <PrimaryButton type="submit" fullWidth>
-                Save New Password
-              </PrimaryButton>
-            </form>
-          )}
-
-          {mode === "verify_success" && (
-            <div className="text-center">
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-50 text-green-600">
-                <Mail size={24} />
-              </div>
-              <h2 className="text-lg font-bold text-gray-900">
-                Check your inbox
-              </h2>
-              <p className="mt-2 text-sm text-gray-500">
-                We've sent a verification link. Please check your email to
-                verify your account. If you don't see it, check your spam
-                folder.
-              </p>
-              <button
-                onClick={() => setMode("signin")}
-                className="mt-6 text-sm font-medium text-primary hover:underline"
-              >
-                Return to sign in
-              </button>
-            </div>
-          )}
+            {/* 🚨 Req #12 & #13: Reusable Success States */}
+            {mode === "verify_success" && (
+              <SuccessState
+                title="Check your inbox"
+                message="We've sent a verification link. Please check your email to verify your account. If you don't see it, check your spam folder."
+                action={() => setMode("signin")}
+                actionText="Return to sign in"
+              />
+            )}
+            {mode === "forgot_success" && (
+              <SuccessState
+                title="Reset link sent"
+                message="Check your inbox for a password reset link. It might take a minute to arrive."
+                action={() => setMode("signin")}
+                actionText="Back to sign in"
+              />
+            )}
+            {mode === "email_verified" && (
+              <SuccessState
+                icon="success"
+                title="Email verified successfully!"
+                message="You can now sign in. Redirecting you automatically..."
+              />
+            )}
+          </div>
         </div>
       </div>
     </main>
